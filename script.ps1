@@ -28,8 +28,6 @@ function Clear-RunHistory {
 
 Clear-RunHistory
 
-$kioskUrl = "https://fakeupdate.net/win10ue"
-
 Start-Process -FilePath "powershell.exe" -WindowStyle Hidden -ArgumentList @(
     "-NoProfile",
     "-ExecutionPolicy", "Bypass",
