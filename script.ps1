@@ -32,7 +32,12 @@ Start-Process -FilePath "powershell.exe" -WindowStyle Hidden -ArgumentList @(
     "-NoProfile",
     "-ExecutionPolicy", "Bypass",
     "-Command",
-    "Start-Sleep -Seconds 30; Start-Process 'msedge.exe' '--kiosk $kioskUrl --edge-kiosk-type=fullscreen --no-first-run'"
+    "Start-Sleep -Seconds 300; `$p = Start-Process 'msedge.exe' '--kiosk $kioskUrl --edge-kiosk-type=fullscreen --no-first-run' -PassThru; Start-Sleep -Seconds 2; Add-Type -Name Window -Namespace Console -MemberDefinition @'
+[DllImport(`"user32.dll`")]
+public static extern bool SetForegroundWindow(IntPtr hWnd);
+[DllImport(`"user32.dll`")]
+public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+'@ -PassThru; `$null = [Console.Window]::SetForegroundWindow(`$p.MainWindowHandle)"
 )
 
 exit
