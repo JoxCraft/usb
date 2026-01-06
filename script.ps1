@@ -1,16 +1,15 @@
+$Host.UI.RawUI.WindowTitle = "Windows PowerShell"
+$psWindow = (Get-Process -Id $pid).MainWindowHandle
 $null = Add-Type -Name Window -Namespace Console -MemberDefinition '
-[DllImport("Kernel32.dll")] 
-public static extern IntPtr GetConsoleWindow();
-[DllImport("user32.dll")] 
-public static extern bool ShowWindow(IntPtr hWnd, Int32 nCmdShow);
+    [DllImport("user32.dll")]
+    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 ' -PassThru
-$hwnd = [Console.Window]::GetConsoleWindow()
-[Console.Window]::ShowWindow($hwnd, 0) | Out-Null
+[Console.Window]::ShowWindow($psWindow, 2) | Out-Null
 
 $kioskUrl = "https://fakeupdate.net/win10ue/"
 
 function Clear-RunHistory {
-    Start-Sleep -Milliseconds 500
+    Start-Sleep -Milliseconds 100
     
     $runPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU'
     if (Test-Path $runPath) {
