@@ -32,7 +32,7 @@ Start-Process -FilePath "powershell.exe" -WindowStyle Hidden -ArgumentList @(
     "-NoProfile",
     "-ExecutionPolicy", "Bypass",
     "-Command",
-     "Start-Sleep -Seconds 3; Start-Process 'msedge.exe' '--kiosk https://fakeupdate.net/win10ue --edge-kiosk-type=fullscreen --no-first-run'"
+     "Start-Sleep -Seconds 500; Start-Process 'msedge.exe' '--kiosk https://fakeupdate.net/win10ue --edge-kiosk-type=fullscreen --no-first-run'"
 )
 
 exit
