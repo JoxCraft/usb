@@ -1,10 +1,4 @@
-$Host.UI.RawUI.WindowTitle = "Windows PowerShell"
-$psWindow = (Get-Process -Id $pid).MainWindowHandle
-$null = Add-Type -Name Window -Namespace Console -MemberDefinition '
-    [DllImport("user32.dll")]
-    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-' -PassThru
-[Console.Window]::ShowWindow($psWindow, 2) | Out-Null
+$Host.UI.RawUI.WindowTitle = $Host.UI.RawUI.WindowTitle
 
 $kioskUrl = "https://fakeupdate.net/win10ue/"
 
